@@ -1,0 +1,28 @@
+name: Geração Automática via Specification
+
+on:
+  push:
+    paths:
+      - 'specs/**'
+
+jobs:
+  gerar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Generate Angular code
+        run: node generators/angular.generator.ts
+
+      - name: Commit automático
+        run: |
+          git config user.name "spec-bot"
+          git config user.email "spec@bot.com"
+          git add .
+          git commit -m "auto: regeneração a partir de specification" || echo "Sem alterações"
+          git push
