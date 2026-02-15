@@ -1,0 +1,26 @@
+Parsing spec file: C:\workspace\SDD\angular-ai-spec-driven-platform\ai-driven-sdd-angular\specs\features\cadastro-conta.feature.spec.md
+Parsed Spec Name: cadastro-de-conta
+Parsed Class Name: CadastroDeConta
+Parsed Constant Name: CadastroDeConta
+Parsed Fields: [
+  {
+    "name": "fullName",
+    "type": "string"
+  },
+  {
+    "name": "email",
+    "type": "string"
+  },
+  {
+    "name": "password",
+    "type": "string"
+  },
+  {
+    "name": "confirmPassword",
+    "type": "string"
+  },
+  {
+    "name": "acceptTerms",
+    "type": "boolean"
+  }
+]

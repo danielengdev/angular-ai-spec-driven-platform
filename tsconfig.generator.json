@@ -1,15 +1,20 @@
 {
-    "extends": "./tsconfig.json",
     "compilerOptions": {
-        "module": "CommonJS",
         "target": "ES2022",
+        "module": "CommonJS",
+        "rootDir": "ai-driven-sdd-angular",
+        "outDir": "dist-generator",
+        "esModuleInterop": true,
+        "moduleResolution": "Node",
         "types": [
             "node"
         ],
-        "esModuleInterop": true
+        "strict": true
     },
     "include": [
-        "generators/**/*",
-        "platform/**/*"
+        "ai-driven-sdd-angular/generators/**/*"
+    ],
+    "exclude": [
+        "**/*.spec.ts"
     ]
 }

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate": "ts-node -P tsconfig.generator.json generators/angular.generator.ts"
+    "generate": "tsc -p tsconfig.generator.json && node dist-generator/generators/angular.generator.js"
   },
   "prettier": {
     "printWidth": 100,
