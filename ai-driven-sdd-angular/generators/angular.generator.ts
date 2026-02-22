@@ -13,30 +13,18 @@ import { buildComponentSpec } from './builders/unitedtest.builder';
 import { updateMainRoutes } from './builders/updateMainRoutes.builder';
 import { buildStyle } from './builders/style.builder';
 
-const FEATURES_PATH = path.resolve(__dirname, '../../ai-driven-sdd-angular/specs/features');
+const FEATURES_PATH = path.resolve(__dirname, '../specs/features');
+const OUTPUT_BASE = path.resolve(__dirname, '../../../src/app/features');
 
-const OUTPUT_BASE = path.resolve(__dirname, '../../src/app/features');
-
-function main() {
-    const files = fs
-        .readdirSync(FEATURES_PATH)
-        .filter(f => f.endsWith('.feature.spec.md'));
-
-    files.forEach(file => {
-        const fullPath = path.join(FEATURES_PATH, file);
-        const spec = parseSpec(fullPath);
-
-        const featurePath = path.join(OUTPUT_BASE, spec.name);
-
-        // // 🔁 Evitar overwrite
-        // if (fs.existsSync(featurePath)) {
-        //     console.log(`⚠️ Feature ${spec.name} já existe. Pulando...`);
-        //     return;
-        // }
+export class AngularGenerator {
+    /**
+     * Gera uma feature específica a partir de um caminho de spec
+     */
+    public generateFeature(specFilePath: string) {
+        const spec = parseSpec(specFilePath);
 
         console.log(`🚀 Gerando feature: ${spec.name}`);
 
-        // 🧠 Builders
         const model = buildModel(spec);
         const component = buildComponent(spec);
         const service = buildService(spec);
@@ -45,7 +33,6 @@ function main() {
         const unitTest = buildComponentSpec(spec);
         const style = buildStyle(spec);
 
-        // 📝 Escrita de arquivos
         writeFeature(OUTPUT_BASE, spec.name, {
             [`${spec.name}.model.ts`]: model,
             [`${spec.name}.service.ts`]: service,
@@ -56,11 +43,21 @@ function main() {
             [`${spec.name}.component.spec.ts`]: unitTest
         });
 
-        // 🔄 Atualiza app.routes.ts automaticamente
         updateMainRoutes(spec);
-
         console.log(`✅ Feature gerada com sucesso: ${spec.name}`);
-    });
+        return spec;
+    }
+
+    /**
+     * Varre a pasta de specs e gera tudo (Comportamento original)
+     */
+    public generateAll() {
+        const files = fs.readdirSync(FEATURES_PATH).filter(f => f.endsWith('.feature.spec.md'));
+        files.forEach(file => this.generateFeature(path.join(FEATURES_PATH, file)));
+    }
 }
 
-main();
+// Execução automática se o script for chamado diretamente
+if (require.main === module) {
+    new AngularGenerator().generateAll();
+}

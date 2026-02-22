@@ -1,20 +1,34 @@
 {
     "compilerOptions": {
         "target": "ES2022",
-        "module": "CommonJS",
-        "rootDir": "ai-driven-sdd-angular",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        /* rootDir deve ser a raiz do projeto para enxergar o Agente e o Motor */
+        "rootDir": "./",
         "outDir": "dist-generator",
         "esModuleInterop": true,
-        "moduleResolution": "Node",
+        "skipLibCheck": true,
         "types": [
             "node"
         ],
-        "strict": true
+        "strict": true,
+        "baseUrl": "./",
+        "paths": {
+            "@generators/*": [
+                "ai-driven-sdd-angular/generators/*"
+            ],
+            "@specs/*": [
+                "ai-driven-sdd-angular/specs/*"
+            ]
+        }
     },
     "include": [
-        "ai-driven-sdd-angular/generators/**/*"
+        "ai-driven-sdd-angular/generators/**/*",
+        "agent/**/*.ts"
     ],
     "exclude": [
+        "node_modules",
+        "src/**/*",
         "**/*.spec.ts"
     ]
 }
